@@ -14,6 +14,9 @@ import {register} from "./controllers/auth.js"
 import userRoutes from "./routes/users.js"
 import { verifyToken } from "./middleware/auth.js"
 import {createPost} from "./controllers/posts.js"
+import User from "./models/User.js"
+import Post from "./models/Post.js"
+import {users, posts} from "./data/index.js"
 
 // Configurations
 const __filename = fileURLToPath(import.meta.url) //Wrap the file url. we can use directory name when using type modules
@@ -60,5 +63,9 @@ mongoose.connect(process.env.MONGO_URI,{
     useUnifiedTopology: true
 }).then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`))
+
+    // Add this data one time
+    // User.insertMany(users)
+    // Post.insertMany(posts)
 })
 .catch((error) => console.log(`${error} did not connect`))
