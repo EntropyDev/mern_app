@@ -11,6 +11,9 @@ import {fileURLToPath} from "url"
 import { ppid } from "process"
 import authRoutes from "./routes/auth.js"
 import {register} from "./controllers/auth.js"
+import userRoutes from "./routes/users.js"
+import { verifyToken } from "./middleware/auth.js"
+import {createPost} from "./controllers/posts.js"
 
 // Configurations
 const __filename = fileURLToPath(import.meta.url) //Wrap the file url. we can use directory name when using type modules
@@ -36,17 +39,23 @@ const storage = multer.diskStorage({
         cb(null, file.originalname)
     }
 })
-const upload = multer( {storage} ) 
+const upload = multer({storage}) 
+
 
 // Routes with file
 app.post("/auth/register", upload.single("picture"), register)
+app.post("/posts", verifyToken, upload.single("picture"), createPost)
+
 
 // Routes
 app.use("/auth", authRoutes)
+app.use("/users", userRoutes)
+
 
 // Mongoose setup
 const PORT = process.env.PORT || 6001
-mongoose.connect(process.env.MONGO_URL,{
+
+mongoose.connect(process.env.MONGO_URI,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
