@@ -45,7 +45,7 @@ app.post("/auth/register", upload.single("picture"), register)
 app.use("/auth", authRoutes)
 
 // Mongoose setup
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 6001
 mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
