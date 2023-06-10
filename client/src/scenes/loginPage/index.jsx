@@ -26,6 +26,7 @@ const LoginPage = () => {
             sx={{mb: "1.5rem"}}>
                 Welcome to Social Media WebApp !
             </Typography>
+            <Form />
         </Box>
         </Box>
     )
