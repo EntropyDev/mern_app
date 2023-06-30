@@ -31,7 +31,8 @@ const MyPostWidget = ({picturePath}) => {
     const dispatch = useDispatch()
     const [isImage, setIsImage] = useState(false)
     const [image, setImage] = useState(null)
-    const [post, setPost] = useStae(" ")
+    const [post, setPost] = useState(" ")
+    const token = useSelector((state) => state.token);
     const {palette} = useTheme()
     const {_id} = useSelector((state) => state.user)
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)")
@@ -45,7 +46,7 @@ const MyPostWidget = ({picturePath}) => {
             formData.append("picture", image)
             formData.append("picturePath", image.name)
         }
-        const response = await fetch(`http://localhost:3001\posts`,{
+        const response = await fetch(`http://localhost:3001/posts`,{
             method: "POST",
             headers: {Authorization: `Bearer ${token}`},
             body: formData
@@ -73,11 +74,13 @@ const MyPostWidget = ({picturePath}) => {
             {isImage && (
                 <Box border={`1px solid ${medium}`}
                 borderRadius = "5px"
-                mt="1rem",
+                mt="1rem"
                 p= "1rem">
-                    
+
                 </Box>
             )}
         </WidgetWrapper>
     )
 }
+
+export default MyPostWidget
